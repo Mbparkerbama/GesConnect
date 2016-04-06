@@ -2,6 +2,7 @@ package com.cs495.gesconnect;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
-import com.myscript.atk.text.CandidateInfo;
 import com.myscript.certificate.MyCertificate;
 
 public class UserActionActivity extends AppCompatActivity implements
@@ -86,7 +86,7 @@ public class UserActionActivity extends AppCompatActivity implements
         });
 
         final Button settingsButton = (Button) findViewById(R.id.drawing_button_right);
-        settingsButton.setText("com.cs495.gesconnect.Settings");
+        settingsButton.setText("Settings");
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,5 +176,18 @@ public class UserActionActivity extends AppCompatActivity implements
 
     public void onSubmitButtonClickListener(View v) {
         // Todo: Process Submit
+        call();
+    }
+
+    private void call(){
+        String phone = "3348305465"; //hardcoded for now. should be updated once we have it gesture-based
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + Uri.encode(phone.trim())));
+        try {
+            startActivity(intent);
+
+        }catch(SecurityException e){
+            Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
+        }
     }
 }
