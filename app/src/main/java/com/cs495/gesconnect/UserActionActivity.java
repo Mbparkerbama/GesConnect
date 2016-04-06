@@ -175,16 +175,15 @@ public class UserActionActivity extends AppCompatActivity implements
     }
 
     public void onSubmitButtonClickListener(View v) {
-        String text = widget.getText().trim();
+        String nameCandidate = widget.getText().trim();
 
         ContactsManager contacts = new ContactsManager(getApplicationContext());
 
-        String phone = contacts.findPhoneNumber(text);
-
-        if (!phone.isEmpty()) {
-            call(phone);
+        if (contacts.countMatches(nameCandidate) == 1) {
+            call(contacts.findPhoneNumber(nameCandidate));
         } else {
             Log.d(TAG, "NO CONTACT FOUND");
+            // Todo: Process as Custom Gesture
         }
     }
 
@@ -192,7 +191,8 @@ public class UserActionActivity extends AppCompatActivity implements
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + Uri.encode(phone.trim())));
         try {
-            startActivity(intent);
+//            startActivity(intent);
+            Log.d(TAG, "Calling: " + phone);
 
         }catch(SecurityException e){
             Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
