@@ -45,7 +45,7 @@ public class UserActionActivity extends AppCompatActivity {
     }
 
     public void openSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, SettingsActivity.class);
+//        startActivity(intent);
     }
 }

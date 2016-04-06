@@ -19,9 +19,21 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        // Location of your package's `libs` directory containing `*.aar` files.
+        dirs '../libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+
+    compile(name: 'MyScript_ATK-Core-android-component', ext: 'aar')
+    compile(name: 'MyScript_ATK-Text-android-component', ext: 'aar')
+    compile(name: 'MyScript_ATK-IMCommon-android-component', ext: 'aar')
+    compile(name: 'MyScript_ATK-SingleLineWidget-android-widget', ext: 'aar')
 }
