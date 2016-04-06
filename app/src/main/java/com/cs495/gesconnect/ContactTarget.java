@@ -46,6 +46,10 @@ public class ContactTarget {
     }
 
     public void load(String data) {
+        if (data.equals("")) {
+            return;
+        }
+
         try {
             byte[] bytes = Base64.decode(data, Base64.DEFAULT);
             InputStream stream = new ByteArrayInputStream(
@@ -57,7 +61,6 @@ public class ContactTarget {
         catch (Exception e) {
 
         }
-
     }
 
     private String lookupKey;
