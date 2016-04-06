@@ -18,9 +18,13 @@ public class GestureList {
 
     }
 
-    public String save(){ return "";}
+    public String save() {
 
-    public void load(String data){
+
+        return "";
+    }
+
+    public void load(String data) {
 
     }
 
