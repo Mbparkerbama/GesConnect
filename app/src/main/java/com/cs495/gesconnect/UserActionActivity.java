@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.myscript.atk.sltw.SingleLineWidget;
@@ -60,6 +61,18 @@ public class UserActionActivity extends AppCompatActivity implements
         // "cur_text" references the configuration name in en_US.conf
         widget.configure("en_US", "cur_text");
 
+        /**
+         * Configure Buttons
+         */
+
+        final Button clearButton = (Button) findViewById(R.id.drawing_button_left);
+        clearButton.setText("Clear");
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                widget.clear();
+            }
+        });
 
     }
 
