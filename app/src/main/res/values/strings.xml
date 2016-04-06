@@ -4,4 +4,5 @@
     <string name="title_activity_user_action">UserActionActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_add_custom_gesture">AddCustomGestureActivity</string>
+    <string name="title_activity_manage_gesture">ManageGestureActivity</string>
 </resources>

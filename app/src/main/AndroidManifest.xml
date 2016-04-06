@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cs495.gesconnect">
 
+    <!-- Vibration permission needed for accessibility vibrations -->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -36,6 +38,15 @@
         <activity
             android:name=".AddCustomGestureActivity"
             android:label="@string/title_activity_add_custom_gesture"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".ManageGestureActivity"
+            android:label="@string/title_activity_manage_gesture"
             android:parentActivityName=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
