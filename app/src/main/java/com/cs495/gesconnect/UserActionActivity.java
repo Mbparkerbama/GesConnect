@@ -75,6 +75,16 @@ public class UserActionActivity extends AppCompatActivity implements
             }
         });
 
+        final Button settingsButton = (Button) findViewById(R.id.drawing_button_right);
+        settingsButton.setText("Settings");
+
+        final UserActionActivity _this = this;
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _this.openSettings(v);
+            }
+        });
     }
 
     @Override
