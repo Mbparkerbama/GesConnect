@@ -2,6 +2,7 @@ package com.cs495.gesconnect;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +94,14 @@ public class UserActionActivity extends AppCompatActivity implements
                 openSettings(v);
             }
         });
+
+        final Button submitButton = (Button) findViewById(R.id.drawing_button_middle);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                call();
+            }
+        });
     }
 
     @Override
@@ -160,5 +169,17 @@ public class UserActionActivity extends AppCompatActivity implements
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    private void call(){
+        String phone = "3348305465"; //hardcoded for now. should be updated once we have it gesture-based
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + Uri.encode(phone.trim())));
+        try {
+            startActivity(intent);
+
+        }catch(SecurityException e){
+            Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
+        }
     }
 }
