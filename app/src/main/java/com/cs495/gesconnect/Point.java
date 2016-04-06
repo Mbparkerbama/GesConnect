@@ -1,10 +1,10 @@
 package com.cs495.gesconnect;
 
 public class Point {
-    int x;
-    int y;
+    float x;
+    float y;
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
@@ -12,7 +12,7 @@ public class Point {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
