@@ -40,12 +40,13 @@ public class Settings {
     }
 
     public static void loadGestureList(Context context) {
-        gestureList.load(getSetting(context,
-                                gestureListStorageName,
-                                ""));
+        String loadData = getSetting(context,
+                gestureListStorageName,
+                "");
+        gestureList.load(loadData);
     }
 
-    static private GestureList gestureList;
+    static private GestureList gestureList = new GestureList();
 
     // String accessors for application settings
     final static public String vibrationEnabledString = "GesVibrationEnabled";
