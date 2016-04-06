@@ -31,6 +31,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="UserActionActivity" />
         </activity>
+        <activity
+            android:name=".AddCustomGestureActivity"
+            android:label="@string/title_activity_add_custom_gesture"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="SettingsActivity" />
+        </activity>
     </application>
 
 </manifest>
