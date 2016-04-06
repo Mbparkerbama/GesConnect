@@ -1,5 +1,6 @@
 package com.cs495.gesconnect;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
@@ -23,8 +24,9 @@ public class SettingsActivity extends AppCompatActivity {
         addGestureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // start AddCustomGestureActivity
-                // ...
+                // Start AddCustomGestureActivity
+                Intent intent = new Intent(getApplicationContext(), AddCustomGestureActivity.class);
+                startActivity(intent);
             }
         });
 
