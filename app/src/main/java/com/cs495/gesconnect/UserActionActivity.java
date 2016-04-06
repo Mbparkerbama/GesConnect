@@ -148,18 +148,18 @@ public class UserActionActivity extends AppCompatActivity implements
     public void onConfigured(SingleLineWidgetApi singleLineWidgetApi, boolean success) {
         if(!success)
         {
-            Toast.makeText(getApplicationContext(), widget.getErrorString(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), widget.getErrorString(), Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to configure the Single Line Widget: " + widget.getErrorString());
             return;
         }
-        Toast.makeText(getApplicationContext(), "Single Line Widget Configured", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Single Line Widget Configured", Toast.LENGTH_SHORT).show();
         if(BuildConfig.DEBUG)
             Log.d(TAG, "Single Line Widget configured!");
     }
 
     @Override
     public void onTextChanged(SingleLineWidgetApi singleLineWidgetApi, String s, boolean b) {
-        Toast.makeText(getApplicationContext(), "Recognition update", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Recognition update", Toast.LENGTH_SHORT).show();
         if(BuildConfig.DEBUG)
         {
             Log.d(TAG, "Single Line Widget recognition: " + widget.getText());
@@ -189,6 +189,7 @@ public class UserActionActivity extends AppCompatActivity implements
             call(contacts.findPhoneNumber(nameCandidate));
         } else {
             Log.d(TAG, "NO CONTACT FOUND");
+            Toast.makeText(getApplicationContext(),"No Contact Found!", Toast.LENGTH_SHORT).show();
             // Todo: Process as Custom Gesture
             long[] pattern = {0, 100, 100, 100};
             vibrate(pattern, -1);
@@ -204,6 +205,7 @@ public class UserActionActivity extends AppCompatActivity implements
 
 //            startActivity(intent);
             Log.d(TAG, "Calling: " + phone);
+            Toast.makeText(getApplicationContext(),"Calling " + phone, Toast.LENGTH_SHORT).show();
 
         }catch(SecurityException e){
             Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
