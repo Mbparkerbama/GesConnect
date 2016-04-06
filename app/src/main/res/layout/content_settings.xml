@@ -19,14 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add gesture"
-        android:id="@+id/button2"
+        android:id="@+id/addGestureButton"
         android:layout_weight="0.10" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Edit gestures"
-        android:id="@+id/button"
+        android:id="@+id/editGesturesButton"
         android:layout_weight="0.10" />
 
     <LinearLayout
@@ -47,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New ToggleButton"
-            android:id="@+id/toggleButton"
-            android:layout_weight="0.10" />
+            android:id="@+id/vibrationsEnabledButton"
+            android:layout_weight="0.10"
+            android:checked="false" />
     </LinearLayout>
 </LinearLayout>
