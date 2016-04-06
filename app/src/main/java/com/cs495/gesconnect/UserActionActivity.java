@@ -1,6 +1,7 @@
 package com.cs495.gesconnect;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.myscript.atk.sltw.SingleLineWidget;
@@ -60,7 +62,29 @@ public class UserActionActivity extends AppCompatActivity implements
         // "cur_text" references the configuration name in en_US.conf
         widget.configure("en_US", "cur_text");
 
+        /**
+         * Configure Buttons
+         */
 
+        final Button clearButton = (Button) findViewById(R.id.drawing_button_left);
+        clearButton.setText("Clear");
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                widget.clear();
+            }
+        });
+
+        final Button settingsButton = (Button) findViewById(R.id.drawing_button_right);
+        settingsButton.setText("Settings");
+
+        final UserActionActivity _this = this;
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                _this.openSettings(v);
+            }
+        });
     }
 
     @Override
@@ -117,7 +141,7 @@ public class UserActionActivity extends AppCompatActivity implements
     }
 
     public void openSettings(View view) {
-//        Intent intent = new Intent(this, SettingsActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 }
