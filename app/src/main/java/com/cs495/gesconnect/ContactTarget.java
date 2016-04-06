@@ -1,5 +1,7 @@
 package com.cs495.gesconnect;
 
+import android.util.Base64;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
@@ -29,11 +31,12 @@ public class ContactTarget {
 
     public String save() {
         try {
-            OutputStream stream = new ByteArrayOutputStream();
-            ObjectOutput output = new ObjectOutputStream(stream);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            ObjectOutputStream output = new ObjectOutputStream(stream);
             output.writeObject(lookupKey);
             output.writeObject(phoneType);
-            return output.toString();
+            output.close();
+            return Base64.encodeToString(stream.toByteArray(), Base64.DEFAULT);
         }
         catch (Exception e) {
 
@@ -44,8 +47,9 @@ public class ContactTarget {
 
     public void load(String data) {
         try {
+            byte[] bytes = Base64.decode(data, Base64.DEFAULT);
             InputStream stream = new ByteArrayInputStream(
-                    data.getBytes());
+                    bytes);
             ObjectInput input = new ObjectInputStream(stream);
             lookupKey = (String) input.readObject();
             phoneType = (int) input.readObject();

@@ -2,9 +2,7 @@ package com.cs495.gesconnect;
 
 import java.util.HashMap;
 
-/**
- * Created by Matt on 4/6/2016.
- */
+
 public class GestureList {
     private HashMap<ContactTarget, Gesture> gestures;
 
