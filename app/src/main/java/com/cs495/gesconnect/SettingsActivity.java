@@ -35,7 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // start ManageGestureActivity
-                // ...
+                Intent intent = new Intent(getApplicationContext(), ManageGestureActivity.class);
+                startActivity(intent);
             }
         });
 
