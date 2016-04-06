@@ -9,7 +9,7 @@ public class Settings {
                 = context.getSharedPreferences(preferencesFileName,
                                                 0);
 
-        // If the key doesn't exist, return a null string
+        // If the key doesn't exist, return an empty string
         return sharedPreferences.getString(key, "");
     }
 
@@ -28,5 +28,13 @@ public class Settings {
 
     } */
 
+    // String accessors for application settings
+    final static public String vibrationEnabledString = "GesVibrationEnabled";
+
+    // Predefined settings values
+    final static public String trueString = "true";
+    final static public String falseString = "false";
+
+    // Name of the shared preference file the key/value pairs are stored to
     final static protected String preferencesFileName = "GesConnectPref";
 }
