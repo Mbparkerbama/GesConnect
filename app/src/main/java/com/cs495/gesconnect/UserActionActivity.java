@@ -86,7 +86,7 @@ public class UserActionActivity extends AppCompatActivity implements
         });
 
         final Button settingsButton = (Button) findViewById(R.id.drawing_button_right);
-        settingsButton.setText("com.cs495.gesconnect.Settings");
+        settingsButton.setText("Submit");
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
