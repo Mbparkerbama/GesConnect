@@ -66,18 +66,18 @@ public class SettingsActivity extends AppCompatActivity {
                             = (Vibrator)(getApplicationContext().getSystemService(VIBRATOR_SERVICE));
                     vibrator.vibrate(100);
 
-                    Toast.makeText(getApplicationContext(), Settings.getSetting(
-                            getApplicationContext(), Settings.vibrationEnabledString)
-                        , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Vibrations enabled",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     // Set vibrations to disabled in com.cs495.gesconnect.Settings
                     Settings.setSetting(getApplicationContext(),
                             Settings.vibrationEnabledString,
                             Settings.falseString);
 
-                    Toast.makeText(getApplicationContext(), Settings.getSetting(
-                            getApplicationContext(), Settings.vibrationEnabledString)
-                            , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Vibrations disabled",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
