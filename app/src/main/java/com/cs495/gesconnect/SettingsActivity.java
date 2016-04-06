@@ -1,6 +1,7 @@
 package com.cs495.gesconnect;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,12 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked) {
                     // set vibrations to enabled in Settings
                     // ...
+
+                    // Do a short vibration to show vibrations are enabled
+                    final Vibrator vibrator
+                            = (Vibrator)(getApplicationContext().getSystemService(VIBRATOR_SERVICE));
+                    vibrator.vibrate(100);
+
                     Toast.makeText(getApplicationContext(), "Vibrations enabled", Toast.LENGTH_SHORT).show();
                 } else {
                     // set vibrations to disabled in Settings
