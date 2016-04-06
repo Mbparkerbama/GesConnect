@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
 
+import java.sql.Array;
+
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
         SingleLineWidgetApi.OnTextChangedListener,
@@ -26,6 +29,7 @@ public class UserActionActivity extends AppCompatActivity implements
     private static final String TAG = "UserActionActivity";
     private SingleLineWidgetApi widget;
     private PointSet pointSet = new PointSet();
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +109,8 @@ public class UserActionActivity extends AppCompatActivity implements
                 onSubmitButtonClickListener(v);
             }
         });
+
+        vibrator = (Vibrator)(getApplicationContext().getSystemService(VIBRATOR_SERVICE));
     }
 
     @Override
@@ -142,18 +148,18 @@ public class UserActionActivity extends AppCompatActivity implements
     public void onConfigured(SingleLineWidgetApi singleLineWidgetApi, boolean success) {
         if(!success)
         {
-            Toast.makeText(getApplicationContext(), widget.getErrorString(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(), widget.getErrorString(), Toast.LENGTH_LONG).show();
             Log.e(TAG, "Unable to configure the Single Line Widget: " + widget.getErrorString());
             return;
         }
-        Toast.makeText(getApplicationContext(), "Single Line Widget Configured", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Single Line Widget Configured", Toast.LENGTH_SHORT).show();
         if(BuildConfig.DEBUG)
             Log.d(TAG, "Single Line Widget configured!");
     }
 
     @Override
     public void onTextChanged(SingleLineWidgetApi singleLineWidgetApi, String s, boolean b) {
-        Toast.makeText(getApplicationContext(), "Recognition update", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Recognition update", Toast.LENGTH_SHORT).show();
         if(BuildConfig.DEBUG)
         {
             Log.d(TAG, "Single Line Widget recognition: " + widget.getText());
@@ -183,7 +189,10 @@ public class UserActionActivity extends AppCompatActivity implements
             call(contacts.findPhoneNumber(nameCandidate));
         } else {
             Log.d(TAG, "NO CONTACT FOUND");
+            Toast.makeText(getApplicationContext(),"No Contact Found!", Toast.LENGTH_SHORT).show();
             // Todo: Process as Custom Gesture
+            long[] pattern = {0, 100, 100, 100};
+            vibrator.vibrate(pattern, -1);
         }
     }
 
@@ -191,8 +200,12 @@ public class UserActionActivity extends AppCompatActivity implements
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + Uri.encode(phone.trim())));
         try {
+            long[] pattern = {0, 300};
+            vibrator.vibrate(pattern, -1);
+
 //            startActivity(intent);
             Log.d(TAG, "Calling: " + phone);
+            Toast.makeText(getApplicationContext(),"Calling " + phone, Toast.LENGTH_SHORT).show();
 
         }catch(SecurityException e){
             Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
