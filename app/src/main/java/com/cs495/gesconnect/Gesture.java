@@ -7,7 +7,7 @@ public class Gesture {
 
     public void setPoints(PointSet points) {this.points = points;}
 
-    //public MatchValue compare(Gesture gesture){return}
+    //public MatchValue compare(Gesture gesture){}
 
     public String save(){return "";}
 
