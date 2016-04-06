@@ -12,16 +12,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
 
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
-        SingleLineWidgetApi.OnTextChangedListener
+        SingleLineWidgetApi.OnTextChangedListener,
+        SingleLineWidgetApi.OnPenMoveListener
 {
     private static final String TAG = "UserActionActivity";
     private SingleLineWidgetApi widget;
+    private PointSet pointSet = new PointSet();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class UserActionActivity extends AppCompatActivity implements
         widget.setOnConfiguredListener(this);
         widget.setOnTextChangedListener(this);
         widget.setAutoScrollEnabled(false);
+        widget.setOnPenMoveListener(this);
 
         // references assets directly from the APK to avoid extraction in application
         // file system
@@ -72,17 +76,21 @@ public class UserActionActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 widget.clear();
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "# Points: " + pointSet.getSize());
+                    Log.d(TAG, "Points: " + pointSet.toString());
+                }
+                pointSet.clear();
             }
         });
 
         final Button settingsButton = (Button) findViewById(R.id.drawing_button_right);
         settingsButton.setText("Settings");
 
-        final UserActionActivity _this = this;
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _this.openSettings(v);
+                openSettings(v);
             }
         });
     }
@@ -138,6 +146,15 @@ public class UserActionActivity extends AppCompatActivity implements
         {
             Log.d(TAG, "Single Line Widget recognition: " + widget.getText());
         }
+    }
+
+    @Override
+    public void onPenMove(SingleLineWidgetApi singleLineWidgetApi, CaptureInfo captureInfo) {
+        Point p = new Point();
+        p.setX(captureInfo.getX());
+        p.setY(captureInfo.getY());
+
+        pointSet.appendPoint(p);
     }
 
     public void openSettings(View view) {
