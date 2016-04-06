@@ -2,10 +2,8 @@ package com.cs495.gesconnect;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,9 +17,6 @@ import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -182,60 +177,14 @@ public class UserActionActivity extends AppCompatActivity implements
     public void onSubmitButtonClickListener(View v) {
         String text = widget.getText().trim();
 
-        List<String> contactNames = new ArrayList<String>();
-        List<String> contactIds = new ArrayList<String>();
+        ContactsManager contacts = new ContactsManager(getApplicationContext());
 
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Text: " + text);
-        }
+        String phone = contacts.findPhoneNumber(text);
 
-        Cursor cursor = getContentResolver().query(
-                android.provider.ContactsContract.Contacts.CONTENT_URI,
-                new String[] { ContactsContract.Contacts.PHOTO_ID,
-                        ContactsContract.Contacts.DISPLAY_NAME,
-                        ContactsContract.Contacts._ID },
-                ContactsContract.Contacts.HAS_PHONE_NUMBER, null,
-                ContactsContract.Contacts.DISPLAY_NAME);
-
-        if (cursor == null) {
-            return;
-        }
-
-        cursor.moveToFirst();
-
-         do {
-             contactNames.add(cursor.getString(1));
-             contactIds.add(cursor.getString((2)));
-             Log.d(TAG, cursor.getString(1));
-        } while (cursor.moveToNext());
-
-        if (contactNames.contains(text)) {
-            // Exact Match Found
-            int position = contactNames.indexOf(text);
-
-            if (BuildConfig.DEBUG) { Log.d(TAG, "CONTACT MATCH FOUND"); }
-
-            cursor = getContentResolver()
-                    .query(android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            new String[] {
-                                    ContactsContract.CommonDataKinds.Phone.NUMBER,
-                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                                    ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME },
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID
-                                    + " = ?",
-                            new String[] { contactIds.get(position) }, null);
-
-            List <String> contactNumbers = new ArrayList<String>();
-
-            cursor.moveToFirst();
-
-             do {
-                contactNumbers.add(cursor.getString(0));
-                Log.d(TAG, cursor.getString(0));
-            } while (cursor.moveToNext());
-
-            call(contactNumbers.get(0));
-
+        if (!phone.isEmpty()) {
+            call(phone);
+        } else {
+            Log.d(TAG, "NO CONTACT FOUND");
         }
     }
 
