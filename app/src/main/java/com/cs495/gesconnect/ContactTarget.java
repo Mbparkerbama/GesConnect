@@ -9,15 +9,15 @@ public class ContactTarget {
         this.lookupKey = lookupKey;
     }
 
-    public int getPhonteType() {
-        return phonteType;
+    public int getPhoneType() {
+        return phoneType;
     }
 
-    public void setPhonteType(int phonteType) {
-        this.phonteType = phonteType;
+    public void setPhoneType(int phonteType) {
+        this.phoneType = phoneType;
     }
 
     private String lookupKey;
-    private int phonteType;
+    private int phoneType;
 
 }
