@@ -3,9 +3,10 @@
     package="com.cs495.gesconnect">
 
     <!-- Vibration permission needed for accessibility vibrations -->
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" android:required="true"/>
+    <uses-permission android:name="android.permission.INTERNET" android:required="true"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" android:required="true"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" android:required="true"/>
 
 
     <application
