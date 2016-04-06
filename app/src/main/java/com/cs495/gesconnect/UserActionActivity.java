@@ -23,6 +23,8 @@ import com.myscript.certificate.MyCertificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cs495.gesconnect.ContactTarget;
+
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
         SingleLineWidgetApi.OnTextChangedListener,
