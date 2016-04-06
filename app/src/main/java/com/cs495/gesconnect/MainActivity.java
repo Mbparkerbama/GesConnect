@@ -16,12 +16,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
+        // Load the gesture list when the application is started
+        Settings.loadGestureList(getApplicationContext());
+
+        // Start the UserActionActivity
         Intent intent = new Intent(this, UserActionActivity.class);
         startActivity(intent);
 
+        // Control will return to us once the UserActionActivity finishes.
+        // Call finish() to terminate the program.
         finish();
     }
 
