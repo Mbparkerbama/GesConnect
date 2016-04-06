@@ -43,9 +43,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         final ToggleButton vibrationsEnabledButton
                 = (ToggleButton) findViewById(R.id.vibrationsEnabledButton);
-        // Set button state based on application settings
+        // Set button state based on application settings (default: true)
         if (Settings.getSetting(getApplicationContext(),
-                Settings.vibrationEnabledString).equals(Settings.trueString)) {
+                Settings.vibrationEnabledString,
+                Settings.trueString).equals(Settings.trueString)) {
             vibrationsEnabledButton.setChecked(true);
         }
         else {
@@ -58,21 +59,25 @@ public class SettingsActivity extends AppCompatActivity {
                     // Set vibrations to enabled in Settings
                     Settings.setSetting(getApplicationContext(),
                                         Settings.vibrationEnabledString,
-                                        "true");
+                                        Settings.trueString);
 
                     // Do a short vibration to show vibrations are enabled
                     final Vibrator vibrator
                             = (Vibrator)(getApplicationContext().getSystemService(VIBRATOR_SERVICE));
                     vibrator.vibrate(100);
 
-                    Toast.makeText(getApplicationContext(), "Vibrations enabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), Settings.getSetting(
+                            getApplicationContext(), Settings.vibrationEnabledString)
+                        , Toast.LENGTH_SHORT).show();
                 } else {
                     // Set vibrations to disabled in com.cs495.gesconnect.Settings
                     Settings.setSetting(getApplicationContext(),
                             Settings.vibrationEnabledString,
-                            "false");
+                            Settings.falseString);
 
-                    Toast.makeText(getApplicationContext(), "Vibrations disabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), Settings.getSetting(
+                            getApplicationContext(), Settings.vibrationEnabledString)
+                            , Toast.LENGTH_SHORT).show();
                 }
             }
         });

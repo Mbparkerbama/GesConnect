@@ -5,12 +5,16 @@ import android.content.Context;
 
 public class Settings {
     public static String getSetting(Context context, String key) {
+        // If the key doesn't exist, return an empty string
+        return getSetting(context, key, "");
+    }
+
+    public static String getSetting(Context context, String key, String defaultVal) {
         SharedPreferences sharedPreferences
                 = context.getSharedPreferences(preferencesFileName,
-                                                0);
+                Context.MODE_PRIVATE);
 
-        // If the key doesn't exist, return an empty string
-        return sharedPreferences.getString(key, "");
+        return sharedPreferences.getString(key, defaultVal);
     }
 
     public static void setSetting(Context context, String key, String value) {
@@ -22,6 +26,7 @@ public class Settings {
             = sharedPreferences.edit();
 
         editor.putString(key, value);
+        editor.commit();
     }
 
 /*    public static GestureList getGestureList() {
