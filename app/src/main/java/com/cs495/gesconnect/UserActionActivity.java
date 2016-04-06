@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
+import com.myscript.atk.text.CandidateInfo;
 import com.myscript.certificate.MyCertificate;
 
 public class UserActionActivity extends AppCompatActivity implements
@@ -93,6 +94,17 @@ public class UserActionActivity extends AppCompatActivity implements
                 openSettings(v);
             }
         });
+
+
+        final Button submitButton = (Button) findViewById(R.id.drawing_button_middle);
+        submitButton.setText("Submit");
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmitButtonClickListener(v);
+            }
+        });
     }
 
     @Override
@@ -160,5 +172,9 @@ public class UserActionActivity extends AppCompatActivity implements
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void onSubmitButtonClickListener(View v) {
+        // Todo: Process Submit
     }
 }
