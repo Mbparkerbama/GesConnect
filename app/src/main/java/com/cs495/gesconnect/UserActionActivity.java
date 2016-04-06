@@ -95,11 +95,14 @@ public class UserActionActivity extends AppCompatActivity implements
             }
         });
 
+
         final Button submitButton = (Button) findViewById(R.id.drawing_button_middle);
+        submitButton.setText("Submit");
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                call();
+                onSubmitButtonClickListener(v);
             }
         });
     }
@@ -169,6 +172,11 @@ public class UserActionActivity extends AppCompatActivity implements
     public void openSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void onSubmitButtonClickListener(View v) {
+        // Todo: Process Submit
+        call();
     }
 
     private void call(){
