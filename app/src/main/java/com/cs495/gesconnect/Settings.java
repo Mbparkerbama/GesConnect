@@ -1,25 +1,32 @@
 package com.cs495.gesconnect;
 
-/**
- * Created by Matt on 4/6/2016.
- */
+import android.content.SharedPreferences;
+import android.content.Context;
+
 public class Settings {
-    private String key;
-    private GestureList gesturelist;
+    public static String getSetting(Context context, String key) {
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(preferencesFileName,
+                                                0);
 
-    public String getKey() {
-        return key;
+        // If the key doesn't exist, return a null string
+        return sharedPreferences.getString(key, "");
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public static void setSetting(Context context, String key, String value) {
+        SharedPreferences sharedPreferences
+                = context.getSharedPreferences(preferencesFileName,
+                0);
+
+        SharedPreferences.Editor editor
+            = sharedPreferences.edit();
+
+        editor.putString(key, value);
     }
 
-    public GestureList getGesturelist() {
-        return gesturelist;
-    }
+/*    public static GestureList getGestureList() {
 
-    public void setGesturelist(GestureList gesturelist) {
-        this.gesturelist = gesturelist;
-    }
+    } */
+
+    final static protected String preferencesFileName = "GesConnectPref";
 }
