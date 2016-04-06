@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
                 new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // set vibrations to enabled in Settings
+                    // set vibrations to enabled in com.cs495.gesconnect.Settings
                     // ...
 
                     // Do a short vibration to show vibrations are enabled
@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Vibrations enabled", Toast.LENGTH_SHORT).show();
                 } else {
-                    // set vibrations to disabled in Settings
+                    // set vibrations to disabled in com.cs495.gesconnect.Settings
                     // ...
                     Toast.makeText(getApplicationContext(), "Vibrations disabled", Toast.LENGTH_SHORT).show();
                 }
