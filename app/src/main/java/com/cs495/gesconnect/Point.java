@@ -1,8 +1,8 @@
 package com.cs495.gesconnect;
 
 public class Point {
-    float x;
-    float y;
+    private float x;
+    private float y;
 
     public float getX() {
         return x;
