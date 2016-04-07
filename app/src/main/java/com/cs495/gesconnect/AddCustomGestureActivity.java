@@ -121,6 +121,7 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
 
                 popupMenu.setOnMenuItemClickListener(popupHandler);
                 popupMenu.show();
+
             }
         });
     }
