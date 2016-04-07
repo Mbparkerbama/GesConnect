@@ -13,12 +13,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
+import android.view.SubMenu;
 
 import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AddCustomGestureActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -100,6 +105,23 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 //onSubmitButtonClickListener(v);
+                ContactsManager contactsManager
+                    = new ContactsManager(getApplicationContext());
+                candidateContacts = contactsManager.findCandidateContacts();
+                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),
+                                            v);
+
+                // Add candidates to the list
+                for (int i = 0; i < candidateContacts.size(); i++) {
+                    popupMenu.getMenu().add(Menu.NONE,
+                                        i,
+                                        Menu.NONE,
+                                        candidateContacts.get(i).getDisplayString());
+                }
+
+                popupMenu.setOnMenuItemClickListener(popupHandler);
+                popupMenu.show();
+
             }
         });
     }
@@ -131,5 +153,21 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
         pointSet.appendPoint(p);
     }
 
+    PopupMenu.OnMenuItemClickListener popupHandler
+            = new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int index = item.getItemId();
+            GestureList gestureList = Settings.getGestureList();
+            HashMap<ContactTarget, Gesture> gestures
+                = gestureList.getGestures();
+            gestures.put(new ContactTarget(candidateContacts.get(index).getLookupKey(),
+                            index),
+                    new Gesture(pointSet));
+            return true;
+        }
+    };
 
+    private ArrayList<CandidateContact> candidateContacts
+            = new ArrayList<CandidateContact>();
 }

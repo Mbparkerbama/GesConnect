@@ -1,6 +1,10 @@
 package com.cs495.gesconnect;
 
 public class Gesture {
+    Gesture(PointSet points) {
+        this.points = points;
+    }
+
     private PointSet points;
 
     public PointSet getPoints(){return points;}
