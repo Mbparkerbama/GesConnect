@@ -63,4 +63,29 @@ public class ContactsManager {
 
         return number;
     }
+
+    public ArrayList<CandidateContact> findCandidateContacts() {
+        ArrayList<CandidateContact> results = new ArrayList<CandidateContact>();
+
+        Cursor cursor = ctx.getContentResolver()
+                .query(android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                String lookupKey = cursor.getString(cursor.getColumnIndex(
+                        android.provider.ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY));
+                String contactName = cursor.getString(cursor.getColumnIndex(
+                        android.provider.ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                results.add(new CandidateContact(lookupKey, contactName));
+            } while(cursor.moveToNext());
+            cursor.close();
+        }
+
+        return results;
+    }
 }

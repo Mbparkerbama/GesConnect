@@ -13,6 +13,11 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class ContactTarget {
+    ContactTarget(String lookupKey, int phoneType) {
+        this.lookupKey = lookupKey;
+        this.phoneType = phoneType;
+    }
+
     public String getLookupKey() {
         return lookupKey;
     }
