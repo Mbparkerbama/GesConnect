@@ -13,4 +13,8 @@ public class Gesture {
 
     public void load(String data){}
 
+    public boolean equals(Gesture other) {
+        return points.equals(other.getPoints());
+    }
+
 }
