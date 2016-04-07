@@ -192,7 +192,7 @@ public class UserActionActivity extends AppCompatActivity implements
             Toast.makeText(getApplicationContext(),"No Contact Found!", Toast.LENGTH_SHORT).show();
             // Todo: Process as Custom Gesture
             long[] pattern = {0, 100, 100, 100};
-            vibrator.vibrate(pattern, -1);
+            vibrate(pattern, -1);
         }
     }
 
@@ -201,7 +201,7 @@ public class UserActionActivity extends AppCompatActivity implements
         intent.setData(Uri.parse("tel:" + Uri.encode(phone.trim())));
         try {
             long[] pattern = {0, 300};
-            vibrator.vibrate(pattern, -1);
+            vibrate(pattern, -1);
 
 //            startActivity(intent);
             Log.d(TAG, "Calling: " + phone);
@@ -209,6 +209,14 @@ public class UserActionActivity extends AppCompatActivity implements
 
         }catch(SecurityException e){
             Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void vibrate(long[] pattern, int pulse){
+        if (Settings.getSetting(getApplicationContext(),
+                Settings.vibrationEnabledString,
+                Settings.trueString).equals(Settings.trueString)) {
+            vibrator.vibrate(pattern, pulse);
         }
     }
 }
