@@ -171,7 +171,7 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
 
             // Add a new entry to the gesture list for this contact
             gestures.put(new ContactTarget(candidateContacts.get(index).getLookupKey(),
-                            index),
+                            candidateContacts.get(index).getPhoneType()),
                     new Gesture(pointSet));
 
 
