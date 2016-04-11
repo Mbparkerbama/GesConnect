@@ -22,6 +22,8 @@ import com.myscript.certificate.MyCertificate;
 import java.sql.Array;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -109,6 +111,23 @@ public class UserActionActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 onSubmitButtonClickListener(v);
+
+                submitButton.setEnabled(false);
+
+                Timer buttonTimer = new Timer();
+                buttonTimer.schedule(new TimerTask() {
+
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                submitButton.setEnabled(true);
+                            }
+                        });
+                    }
+                }, 2000);
             }
         });
 
@@ -194,6 +213,7 @@ public class UserActionActivity extends AppCompatActivity implements
             } else {
                 Log.d(TAG, "NO CONTACT FOUND");
                 Toast.makeText(getApplicationContext(), "No Contact Found!", Toast.LENGTH_SHORT).show();
+
                 // Todo: Process as Custom Gesture
                 if (pointSet.equals(pointSet)) {
                     Log.d(TAG, "EQUAL!");

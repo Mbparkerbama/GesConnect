@@ -24,6 +24,8 @@ import com.myscript.certificate.MyCertificate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddCustomGestureActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -126,6 +128,22 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
                     popupMenu.show();
 
                 }
+                submitButton.setEnabled(false);
+
+                Timer buttonTimer = new Timer();
+                buttonTimer.schedule(new TimerTask() {
+                    //Simple submit button delay (!!Untested!!)
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                submitButton.setEnabled(true);
+                            }
+                        });
+                    }
+                }, 2000);
             }
         });
     }
