@@ -22,6 +22,7 @@ import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -171,8 +172,11 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
                             index),
                     new Gesture(pointSet));
 
+
             // Write the updated gesture list to permanent storage
+
             Settings.saveGestureList(getApplicationContext());
+
 
             return true;
         }
@@ -180,4 +184,6 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
 
     private ArrayList<CandidateContact> candidateContacts
             = new ArrayList<CandidateContact>();
+
+    private static final String TAG = "AddCustomGesture";
 }
