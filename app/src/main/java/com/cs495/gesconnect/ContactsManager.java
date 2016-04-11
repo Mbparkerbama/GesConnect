@@ -3,9 +3,12 @@ package com.cs495.gesconnect;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by spencer on 4/6/16.
@@ -18,8 +21,10 @@ public class ContactsManager {
         this.ctx = ctx;
     }
 
+    private static final String TAG = "ContactsManager";
+
     public int countMatches(String name) {
-        int matches = 0;
+        Set<Integer> matches = new HashSet<>();
 
         Cursor cursor = ctx.getContentResolver()
                 .query(android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -34,12 +39,13 @@ public class ContactsManager {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                matches++;
+                matches.add(cursor.getInt(1));
+                Log.d(TAG, cursor.getString(1));
             } while(cursor.moveToNext());
             cursor.close();
         }
 
-        return matches;
+        return matches.size();
     }
 
     public String findPhoneNumber(String name) {
