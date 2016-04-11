@@ -81,6 +81,16 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // start ManageGestureActivity
+                Intent intent = new Intent(getApplicationContext(), UserActionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

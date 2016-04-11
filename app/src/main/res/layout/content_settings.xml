@@ -17,22 +17,23 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add gesture"
+        android:layout_height="0dp"
+        android:text="Add Gesture"
         android:id="@+id/addGestureButton"
-        android:layout_weight="0.10" />
+        android:layout_weight="0.25" />
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit gestures"
+        android:layout_height="0dp"
+        android:text="Edit Gestures"
         android:id="@+id/editGesturesButton"
-        android:layout_weight="0.10" />
+        android:layout_weight="0.25" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="0.25">
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,4 +52,12 @@
             android:layout_weight="0.10"
             android:checked="false" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="217dp"
+        android:layout_height="70dp"
+        android:text="@string/Back"
+        android:id="@+id/backButton"
+        android:clickable="false"
+        android:background="#9c4242" />
 </LinearLayout>
