@@ -17,8 +17,12 @@ public class Gesture {
 
     public void load(String data){}
 
-    public boolean equals(Gesture other) {
-        return points.equals(other.getPoints());
+    public boolean equals(Object other) {
+        if (other instanceof Gesture) {
+            return points.equals(((Gesture) other).getPoints());
+        }
+
+        return other instanceof PointSet && points.equals((PointSet) other);
     }
 
 }

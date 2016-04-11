@@ -104,24 +104,28 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onSubmitButtonClickListener(v);
-                ContactsManager contactsManager
-                    = new ContactsManager(getApplicationContext());
-                candidateContacts = contactsManager.findCandidateContacts();
-                PopupMenu popupMenu = new PopupMenu(getApplicationContext(),
-                                            v);
 
-                // Add candidates to the list
-                for (int i = 0; i < candidateContacts.size(); i++) {
-                    popupMenu.getMenu().add(Menu.NONE,
-                                        i,
-                                        Menu.NONE,
-                                        candidateContacts.get(i).getDisplayString());
+                if (!pointSet.getPoints().isEmpty()) {
+                    //onSubmitButtonClickListener(v);
+                    ContactsManager contactsManager
+                            = new ContactsManager(getApplicationContext());
+
+                    candidateContacts = contactsManager.findCandidateContacts();
+                    PopupMenu popupMenu = new PopupMenu(getApplicationContext(),
+                            v);
+
+                    // Add candidates to the list
+                    for (int i = 0; i < candidateContacts.size(); i++) {
+                        popupMenu.getMenu().add(Menu.NONE,
+                                i,
+                                Menu.NONE,
+                                candidateContacts.get(i).getDisplayString());
+                    }
+
+                    popupMenu.setOnMenuItemClickListener(popupHandler);
+                    popupMenu.show();
+
                 }
-
-                popupMenu.setOnMenuItemClickListener(popupHandler);
-                popupMenu.show();
-
             }
         });
     }

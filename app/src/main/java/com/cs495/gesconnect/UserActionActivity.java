@@ -20,6 +20,8 @@ import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
 
 import java.sql.Array;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserActionActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -200,6 +202,22 @@ public class UserActionActivity extends AppCompatActivity implements
                 vibrate(pattern, -1);
             }
         }
+    }
+
+    private boolean hasMatch(PointSet points)
+    {
+        boolean hashMatch = false;
+
+        HashMap<ContactTarget, Gesture> gestures = Settings.getGestureList().getGestures();
+
+        for (Map.Entry entry : gestures.entrySet()) {
+            if (entry.getValue().equals(points)) {
+                hashMatch = true;
+                Log.d(TAG, "MATCHING GESTURE FOUND.");
+            }
+        }
+
+        return hashMatch;
     }
 
     private void call(String phone){
