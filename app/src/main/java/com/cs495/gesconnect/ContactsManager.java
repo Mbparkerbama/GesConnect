@@ -76,6 +76,34 @@ public class ContactsManager {
         return number;
     }
 
+    public String findPhoneByType(String lookupKey, Integer phoneType) {
+        String number = "";
+
+        Cursor cursor = ctx.getContentResolver()
+                .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        new String[] {
+                                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
+                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                                ContactsContract.CommonDataKinds.Phone.TYPE,
+                                ContactsContract.CommonDataKinds.Phone.NUMBER },
+
+                                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+                                    + " = ? AND " +
+                                ContactsContract.CommonDataKinds.Phone.TYPE
+                                    + " = ?",
+
+                        new String[] {lookupKey, Integer.toString(phoneType)}, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            number = cursor.getString(3);
+            Log.d(TAG, "PHONE TYPE: " + cursor.getString(2));
+            cursor.close();
+        }
+
+        return number;
+    }
+
     public ArrayList<CandidateContact> findCandidateContacts() {
         ArrayList<CandidateContact> results = new ArrayList<CandidateContact>();
 

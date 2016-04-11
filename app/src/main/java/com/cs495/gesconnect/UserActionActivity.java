@@ -215,8 +215,12 @@ public class UserActionActivity extends AppCompatActivity implements
                 Toast.makeText(getApplicationContext(), "No Contact Found!", Toast.LENGTH_SHORT).show();
 
                 // Todo: Process as Custom Gesture
-                if (pointSet.equals(pointSet)) {
-                    Log.d(TAG, "EQUAL!");
+                ContactTarget match = getMatch(pointSet);
+                if (match != null) {
+                    Log.d(TAG, "MATCH PHONE TYPE: " + match.getPhoneType());
+                    Log.d(TAG, "MATCH NUMBER IS " + contacts.findPhoneByType(match.getLookupKey(), match.getPhoneType()));
+                    call(contacts.findPhoneByType(match.getLookupKey(), match.getPhoneType()));
+                    return;
                 }
                 long[] pattern = {0, 100, 100, 100};
                 vibrate(pattern, -1);
@@ -224,7 +228,7 @@ public class UserActionActivity extends AppCompatActivity implements
         }
     }
 
-    private boolean hasMatch(PointSet points)
+    private ContactTarget getMatch(PointSet points)
     {
         boolean hashMatch = false;
 
@@ -232,12 +236,12 @@ public class UserActionActivity extends AppCompatActivity implements
 
         for (Map.Entry entry : gestures.entrySet()) {
             if (entry.getValue().equals(points)) {
-                hashMatch = true;
                 Log.d(TAG, "MATCHING GESTURE FOUND.");
+                return (ContactTarget) entry.getKey();
             }
         }
 
-        return hashMatch;
+        return null;
     }
 
     private void call(String phone){

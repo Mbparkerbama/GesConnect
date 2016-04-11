@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class PointSet implements Serializable {
     public static final String TAG = "PointSet";
-    public static final float MATCH_VAL = 0.5f;
+    public static final float MATCH_VAL = 75.0f;
 
     private List<Point> points;
 
@@ -47,6 +47,7 @@ public class PointSet implements Serializable {
         }
 
         Log.d(TAG, "ORIGINAL:" + points.size() + points.toString());
+        Log.d(TAG, "ORIGINAL (other):" + points.size() + ((PointSet) other).toString());
 
         List<Point> myPoints = normalize(points);
         List<Point> otherPoints = normalize(((PointSet) other).getPoints());
