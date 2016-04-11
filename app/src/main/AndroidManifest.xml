@@ -3,11 +3,18 @@
     package="com.cs495.gesconnect">
 
     <!-- Vibration permission needed for accessibility vibrations -->
-    <uses-permission android:name="android.permission.VIBRATE" android:required="true"/>
-    <uses-permission android:name="android.permission.INTERNET" android:required="true"/>
-    <uses-permission android:name="android.permission.CALL_PHONE" android:required="true"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS" android:required="true"/>
-
+    <uses-permission
+        android:name="android.permission.VIBRATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.CALL_PHONE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.READ_CONTACTS"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -56,6 +63,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="SettingsActivity" />
         </activity>
+        <activity android:name=".EditCustomGestureActivity"></activity>
     </application>
 
 </manifest>
