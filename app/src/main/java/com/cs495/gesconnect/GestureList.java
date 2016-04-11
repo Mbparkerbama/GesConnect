@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 
 public class GestureList {
-    private HashMap<ContactTarget, Gesture> gestures;
+    private HashMap<ContactTarget, Gesture> gestures = new HashMap<>();
 
     public HashMap<ContactTarget, Gesture> getGestures() {
         return gestures;
