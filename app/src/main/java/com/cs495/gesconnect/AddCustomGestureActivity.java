@@ -129,22 +129,6 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
                     popupMenu.show();
 
                 }
-                submitButton.setEnabled(false);
-
-                Timer buttonTimer = new Timer();
-                buttonTimer.schedule(new TimerTask() {
-                    //Simple submit button delay (!!Untested!!)
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                submitButton.setEnabled(true);
-                            }
-                        });
-                    }
-                }, 2000);
             }
         });
     }
