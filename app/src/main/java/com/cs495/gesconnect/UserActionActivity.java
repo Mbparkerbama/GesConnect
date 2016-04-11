@@ -193,9 +193,9 @@ public class UserActionActivity extends AppCompatActivity implements
                 Log.d(TAG, "NO CONTACT FOUND");
                 Toast.makeText(getApplicationContext(), "No Contact Found!", Toast.LENGTH_SHORT).show();
                 // Todo: Process as Custom Gesture
-                //if (pointSet.equals(pointSet)) { - Matt (Not really sure what this is doing)
-                //    Log.d(TAG, "EQUAL!");
-                //}
+                if (pointSet.equals(pointSet)) {
+                    Log.d(TAG, "EQUAL!");
+                }
                 long[] pattern = {0, 100, 100, 100};
                 vibrate(pattern, -1);
             }

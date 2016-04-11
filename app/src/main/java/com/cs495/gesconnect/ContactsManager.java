@@ -44,6 +44,8 @@ public class ContactsManager {
             } while(cursor.moveToNext());
             cursor.close();
         }
+        
+        Log.d(TAG, Integer.toString(matches.size()));
 
         return matches.size();
     }
