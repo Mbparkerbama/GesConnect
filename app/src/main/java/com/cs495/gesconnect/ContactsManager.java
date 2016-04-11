@@ -91,10 +91,50 @@ public class ContactsManager {
             do {
                 String lookupKey = cursor.getString(cursor.getColumnIndex(
                         android.provider.ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY));
+
                 String contactName = cursor.getString(cursor.getColumnIndex(
                         android.provider.ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                results.add(new CandidateContact(lookupKey, contactName));
-            } while(cursor.moveToNext());
+
+                // Query ContactsContract.Data for all rows containing phone numbers
+                // associated with this contact
+                Cursor phoneCursor = ctx.getContentResolver().query(
+                        android.provider.ContactsContract.Data.CONTENT_URI,
+                        new String[] {
+                                android.provider.ContactsContract.CommonDataKinds.Phone.NUMBER,
+                                android.provider.ContactsContract.CommonDataKinds.Phone.TYPE,
+                                },
+                        android.provider.ContactsContract.Data.LOOKUP_KEY
+                                + "=?" + " AND "
+                                + android.provider.ContactsContract.Data.MIMETYPE
+                                + "='"
+                                + android.provider.ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                                + "'",
+                        new String[] {lookupKey}, null);
+
+                // If no results found, add no entries
+                if ((phoneCursor == null)
+                        || (phoneCursor.getCount() <= 0)) {
+                    continue;
+                }
+
+                phoneCursor.moveToFirst();
+
+                do {
+                    // Add an entry for each phone number associated with the contact
+                    String contactNumber =
+                            cursor.getString(cursor.getColumnIndex(
+                            android.provider.ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    int phoneType =
+                            Integer.parseInt(
+                                    cursor.getString(cursor.getColumnIndex(
+                                    android.provider.ContactsContract.CommonDataKinds.Phone.TYPE)));
+                    results.add(new CandidateContact(lookupKey,
+                            phoneType,
+                            contactName + " " + contactNumber));
+                } while (phoneCursor.moveToNext());
+
+
+            } while (cursor.moveToNext());
             cursor.close();
         }
 

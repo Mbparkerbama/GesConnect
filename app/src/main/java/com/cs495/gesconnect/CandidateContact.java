@@ -4,8 +4,9 @@ package com.cs495.gesconnect;
  * Created by Patrick on 4/6/2016.
  */
 public class CandidateContact {
-    CandidateContact(String lookupKey, String displayString) {
+    CandidateContact(String lookupKey, int phoneType, String displayString) {
         this.lookupKey = lookupKey;
+        this.phoneType = phoneType;
         this.displayString = displayString;
     }
 
@@ -17,6 +18,14 @@ public class CandidateContact {
         this.lookupKey = lookupKey;
     }
 
+    public int getPhoneType() {
+        return phoneType;
+    }
+
+    public void setPhoneType(int phoneType) {
+        this.phoneType = phoneType;
+    }
+
     public String getDisplayString() {
         return displayString;
     }
@@ -26,6 +35,8 @@ public class CandidateContact {
     }
 
     private String lookupKey;
+
+    private int phoneType;
 
     private String displayString;
 }
