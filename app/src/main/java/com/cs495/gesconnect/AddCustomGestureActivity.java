@@ -161,9 +161,15 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
             GestureList gestureList = Settings.getGestureList();
             HashMap<ContactTarget, Gesture> gestures
                 = gestureList.getGestures();
+
+            // Add a new entry to the gesture list for this contact
             gestures.put(new ContactTarget(candidateContacts.get(index).getLookupKey(),
                             index),
                     new Gesture(pointSet));
+
+            // Write the updated gesture list to permanent storage
+            Settings.saveGestureList(getApplicationContext());
+
             return true;
         }
     };
