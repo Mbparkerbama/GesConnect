@@ -2,7 +2,11 @@ package com.cs495.gesconnect;
 
 import android.content.SharedPreferences;
 import android.content.Context;
+import android.util.Log;
+
 import com.cs495.gesconnect.GestureList;
+
+import java.io.IOException;
 
 public class Settings {
     public static String getSetting(Context context, String key) {
@@ -15,6 +19,7 @@ public class Settings {
                 = context.getSharedPreferences(preferencesFileName,
                 Context.MODE_PRIVATE);
 
+        Log.d(TAG, "Reading " + key + ":" + sharedPreferences.getString(key, defaultVal));
         return sharedPreferences.getString(key, defaultVal);
     }
 
@@ -27,6 +32,7 @@ public class Settings {
             = sharedPreferences.edit();
         editor.putString(key, value);
         editor.commit();
+        Log.d(TAG, "Saved " + key + ":" + value);
     }
 
     public static GestureList getGestureList() {
@@ -34,6 +40,7 @@ public class Settings {
     }
 
     public static void saveGestureList(Context context) {
+        Log.d(TAG, "Saving Gesture List");
         setSetting(context,
                 gestureListStorageName,
                 gestureList.save());
@@ -59,4 +66,6 @@ public class Settings {
     final static private String preferencesFileName = "GesConnectPref";
 
     final static private String gestureListStorageName = "GesMasterGestureList";
+
+    private static final String TAG = "Settings";
 }

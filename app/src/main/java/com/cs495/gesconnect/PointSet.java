@@ -2,13 +2,14 @@ package com.cs495.gesconnect;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by spencer on 4/6/16.
  */
-public class PointSet {
+public class PointSet implements Serializable {
     public static final String TAG = "PointSet";
     public static final float MATCH_VAL = 0.5f;
 
