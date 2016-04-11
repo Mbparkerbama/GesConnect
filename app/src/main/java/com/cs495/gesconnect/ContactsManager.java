@@ -24,6 +24,10 @@ public class ContactsManager {
     private static final String TAG = "ContactsManager";
 
     public int countMatches(String name) {
+        /**
+         * Note: Assume contacts "Dad" and "Dad Work". Input gesture "Dad" can _never_
+         *       match because it is a partial for the other contact.
+         */
         Set<Integer> matches = new HashSet<>();
 
         Cursor cursor = ctx.getContentResolver()
@@ -44,7 +48,7 @@ public class ContactsManager {
             } while(cursor.moveToNext());
             cursor.close();
         }
-        
+
         Log.d(TAG, Integer.toString(matches.size()));
 
         return matches.size();
