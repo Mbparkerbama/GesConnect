@@ -10,9 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 
-public class ContactTarget {
+public class ContactTarget implements Serializable {
     ContactTarget(String lookupKey, int phoneType) {
         this.lookupKey = lookupKey;
         this.phoneType = phoneType;

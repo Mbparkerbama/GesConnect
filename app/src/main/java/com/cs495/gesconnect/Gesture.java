@@ -1,6 +1,8 @@
 package com.cs495.gesconnect;
 
-public class Gesture {
+import java.io.Serializable;
+
+public class Gesture implements Serializable {
     Gesture(PointSet points) {
         this.points = points;
     }
