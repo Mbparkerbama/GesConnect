@@ -24,27 +24,32 @@ public class ManageGestureActivity extends AppCompatActivity {
 
     private ListView listView;
     private ContactsManager contactsManager;
+    GestureList gestureList;
+    private Map<ContactTarget, String> contacts;
+    private List<String> names = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_gesture);
 
-        GestureList gestureList = Settings.getGestureList();
+        gestureList = Settings.getGestureList();
         Set<ContactTarget> contactTargets = gestureList.getGestures().keySet();
 
         contactsManager = new ContactsManager(getApplicationContext());
 
-        final Map<ContactTarget, String> contacts = new HashMap<>();
+        contacts = new HashMap<>();
 
         for (ContactTarget ct : contactTargets) {
-            contacts.put(ct, contactsManager.findName(ct.getLookupKey()));
+            String name = contactsManager.findName(ct.getLookupKey());
+            contacts.put(ct, name);
+            names.add(name);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                contacts.values().toArray(new String[contacts.size()])
+                names
         );
 
         listView = (ListView) findViewById(R.id.customGestureListView);
@@ -65,7 +70,20 @@ public class ManageGestureActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
                 TextView tv = (TextView) view;
-                Toast.makeText(getApplicationContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
+                String contactName = tv.getText().toString().trim();
+
+                for (Map.Entry<ContactTarget, String> i : contacts.entrySet()) {
+                    if (i.getValue().equals(contactName)) {
+                        gestureList.removeGesture(i.getKey());
+                        contacts.remove(i.getKey());
+                        Settings.saveGestureList(getApplicationContext());
+                        break;
+                    }
+                }
+
+                names.remove(position);
+                adapter.notifyDataSetChanged();
+
                 return true;
 
             }

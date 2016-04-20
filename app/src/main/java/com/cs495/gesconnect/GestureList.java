@@ -26,7 +26,7 @@ public class GestureList {
     }
 
     public void removeGesture(ContactTarget contactID){
-
+        gestures.remove(contactID);
     }
 
     public String save() {
