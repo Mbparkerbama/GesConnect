@@ -1,5 +1,6 @@
 package com.cs495.gesconnect;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -79,8 +80,24 @@ public class PointSet implements Serializable {
         return (diff < MATCH_VAL);
     }
 
+    /**
+     * Draw this set of points, scaled to maximally fit the area of the
+     * passed Canvas.
+     * @param canvas Canvas to draw on.
+     */
+    public void drawScaled(Canvas canvas) {
+        int w = canvas.getWidth();
+        int h = canvas.getHeight();
+
+
+    }
+
     private float min(List<Float> dists) {
-        float min = 5000.0f;
+        if (dists.size() <= 0) {
+            return 0.0f;
+        }
+
+        float min = dists.get(0);
 
         for (float f : dists) {
             if (f < min) {
@@ -100,13 +117,17 @@ public class PointSet implements Serializable {
         return dists;
     }
 
+    // Scale the points in ps to a standard reference size
     private List<Point> scale(List<Point> ps) {
         List<Point> scaled = new ArrayList<>();
-        float maxX = -1000;
-        float maxY = -1000;
 
+        if (ps.size() <= 0) {
+            return scaled;
+        }
 
-
+        // Find the farthest x/y extent of the set
+        float maxX = ps.get(0).getX();
+        float maxY = ps.get(0).getY();
         for (Point p: ps) {
             if (p.getX() > maxX) {
                 maxX = p.getX();
@@ -117,9 +138,11 @@ public class PointSet implements Serializable {
             }
         }
 
-        float factorX = (maxX != 0) ? 1000 / maxX : 1;
-        float factorY = (maxY != 0) ? 1000 / maxY : 1;
+        // Compute the amount by which to scale each point
+        float factorX = (maxX != 0) ? (standardScaleFactor / maxX) : 1;
+        float factorY = (maxY != 0) ? (standardScaleFactor / maxY) : 1;
 
+        // Scale the points
         for (Point p : ps) {
             Point t = new Point();
             t.setX(factorX * p.getX());
@@ -130,6 +153,8 @@ public class PointSet implements Serializable {
         return scaled;
     }
 
+    // Shift the points in ps so that the origin is at the (approximate)
+    // bottom-left point
     private List<Point> normalize(List<Point> ps) {
         List<Point> normalized = new ArrayList<>();
 
@@ -145,8 +170,16 @@ public class PointSet implements Serializable {
         return normalized;
     }
 
+    // Find the (approximate) bottom-left point in ps
     private Point getRelOrigin(List<Point> ps) {
-        float curY = 5000.0f;
+        if (ps.size() <= 0) {
+            Point result = new Point();
+            result.setX(0.0f);
+            result.setY(0.0f);
+            return result;
+        }
+
+        float curY = ps.get(0).getY();
         List<Integer> idxsY = new ArrayList<>();
 
         for (int i = 0; i < ps.size(); i++) {
@@ -161,7 +194,7 @@ public class PointSet implements Serializable {
             }
         }
 
-        float curX = 5000.0f;
+        float curX = ps.get(0).getX();
         Point min = new Point();
 
         for (int i = 0; i < idxsY.size(); i++) {
@@ -176,4 +209,6 @@ public class PointSet implements Serializable {
 
         return min;
     }
+
+    private static final float standardScaleFactor = 1000;
 }

@@ -180,8 +180,8 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
 
             Settings.saveGestureList(getApplicationContext());
             Toast.makeText(getApplicationContext(),"Added a custom gesture to: " + candidateContacts.get(index).getDisplayString(), Toast.LENGTH_LONG).show();
-            widget.clear();
-            pointSet.clear();
+//            widget.clear();
+//            pointSet.clear();
 
             return true;
         }
