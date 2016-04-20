@@ -148,7 +148,8 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
 
     @Override
     public void onTextChanged(SingleLineWidgetApi singleLineWidgetApi, String s, boolean b) {
-        //
+        // Don't show text recognition -- we want a gesture
+        widget.setText("");
     }
 
     @Override
