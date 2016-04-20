@@ -23,7 +23,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_custom_gesture);
+        setContentView(R.layout.drawing_surface);
 
         widget = (SingleLineWidget) findViewById(R.id.singleLine_widget);
         if (!widget.registerCertificate(MyCertificate.getBytes()))
