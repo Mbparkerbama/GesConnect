@@ -90,7 +90,7 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
         });
 
         final Button cancelButton = (Button) findViewById(R.id.drawing_button_right);
-        cancelButton.setText("Cancel");
+        cancelButton.setText("Back");
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,11 +179,15 @@ public class AddCustomGestureActivity extends AppCompatActivity implements
             // Write the updated gesture list to permanent storage
 
             Settings.saveGestureList(getApplicationContext());
-
+            Toast.makeText(getApplicationContext(),"Added a custom gesture to: " + candidateContacts.get(index).getDisplayString(), Toast.LENGTH_LONG).show();
+            widget.clear();
+            pointSet.clear();
 
             return true;
         }
     };
+
+
 
     private ArrayList<CandidateContact> candidateContacts
             = new ArrayList<CandidateContact>();
