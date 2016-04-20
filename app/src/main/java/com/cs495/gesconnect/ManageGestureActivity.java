@@ -71,9 +71,6 @@ public class ManageGestureActivity extends AppCompatActivity {
                 }
 
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Item clicked!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), EditCustomGestureActivity.class);
-                startActivity(intent);
             }
         });
 
