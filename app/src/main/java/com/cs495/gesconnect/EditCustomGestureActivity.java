@@ -16,6 +16,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
         SingleLineWidgetApi.OnTextChangedListener,
         SingleLineWidgetApi.OnPenMoveListener {
+
     private SingleLineWidgetApi widget;
     private PointSet pointSet = new PointSet();
 
@@ -58,6 +59,19 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         // "en_US" references the en_US bundle name in conf/en_US.conf file in your assets.
         // "cur_text" references the configuration name in en_US.conf
         widget.configure("en_US", "cur_text");
+
+        //retrieves the selected gesture and contact information
+        String savedGesture;
+        if (savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                savedGesture = null;
+            }else{
+                savedGesture = extras.getString(""); //subject to change
+            }
+        }else{
+            savedGesture = (String) savedInstanceState.getSerializable(""); //subject to change
+        }
 
         /**
          * Configure Buttons

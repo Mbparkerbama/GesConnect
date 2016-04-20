@@ -1,6 +1,7 @@
 package com.cs495.gesconnect;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,6 +55,8 @@ public class ManageGestureActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Intent to Edit Activity
                 Toast.makeText(getApplicationContext(), "Item clicked!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), EditCustomGestureActivity.class);
+                startActivity(intent);
             }
         });
 
