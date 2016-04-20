@@ -104,6 +104,28 @@ public class ContactsManager {
         return number;
     }
 
+    public String findName(String lookupKey) {
+        String name = null;
+
+        Cursor cursor = ctx.getContentResolver()
+                .query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        new String[] {
+                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                        },
+                        ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY
+                            + " = ? ",
+                        new String[] {lookupKey}, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            name = cursor.getString(0);
+            Log.d(TAG, "DISPLAY NAME: " + name);
+            cursor.close();
+        }
+
+        return name;
+    }
+
     public ArrayList<CandidateContact> findCandidateContacts() {
         ArrayList<CandidateContact> results = new ArrayList<CandidateContact>();
 
