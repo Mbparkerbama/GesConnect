@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class PointSet implements Serializable {
     public static final String TAG = "PointSet";
-    public static final float MATCH_VAL = 75.0f;
+    public static final float MATCH_VAL = 115.0f;
 
     private List<Point> points;
 
@@ -104,6 +104,8 @@ public class PointSet implements Serializable {
         List<Point> scaled = new ArrayList<>();
         float maxX = -1000;
         float maxY = -1000;
+        float div =  1000;
+
 
         for (Point p: ps) {
             if (p.getX() > maxX) {
@@ -115,8 +117,8 @@ public class PointSet implements Serializable {
             }
         }
 
-        float factorX = (maxX != 0) ? 1000 / maxX : 1;
-        float factorY = (maxY != 0) ? 1000 / maxY : 1;
+        float factorX = (maxX != 0) ? div / maxX : 1;
+        float factorY = (maxY != 0) ? div / maxY : 1;
 
         for (Point p : ps) {
             Point t = new Point();

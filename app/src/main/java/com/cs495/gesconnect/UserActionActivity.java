@@ -211,8 +211,6 @@ public class UserActionActivity extends AppCompatActivity implements
             if (contacts.countMatches(nameCandidate) == 1) {
                 call(contacts.findPhoneNumber(nameCandidate));
             } else {
-                Log.d(TAG, "NO CONTACT FOUND");
-                Toast.makeText(getApplicationContext(), "No Contact Found!", Toast.LENGTH_SHORT).show();
 
                 // Todo: Process as Custom Gesture
                 ContactTarget match = getMatch(pointSet);
@@ -224,6 +222,8 @@ public class UserActionActivity extends AppCompatActivity implements
                 }
                 long[] pattern = {0, 100, 100, 100};
                 vibrate(pattern, -1);
+                Log.d(TAG, "NO CONTACT OR CUSTOM GESTURE FOUND");
+                Toast.makeText(getApplicationContext(), "No Contact or custom gesture found!", Toast.LENGTH_SHORT).show();
             }
         }
     }
