@@ -1,6 +1,7 @@
 package com.cs495.gesconnect;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -89,7 +90,25 @@ public class PointSet implements Serializable {
         int w = canvas.getWidth();
         int h = canvas.getHeight();
 
+        List<Point> scaledPoints
+                = scaleToFit(points, w, h);
 
+        // Draw points, offsetting to account for Cartesian vs. drawing coordinates
+        Paint paint = new Paint();
+        paint.setARGB(255, 0, 0, 0);
+        int offsetX = w / 2;
+        int offsetY = h / 2;
+        for (int i = 0; i < scaledPoints.size() - 1; i++) {
+            Point point1 = scaledPoints.get(i);
+            Point point2 = scaledPoints.get(i + 1);
+
+            canvas.drawLine(
+                    (float)((point1.getX())) + offsetX,
+                    (float)(-(point1.getY())) + offsetY,
+                    (float)((point2.getX())) + offsetX,
+                    (float)(-(point2.getY())) + offsetY,
+                    paint);
+        }
     }
 
     private float min(List<Float> dists) {
@@ -117,10 +136,11 @@ public class PointSet implements Serializable {
         return dists;
     }
 
-    // Scale the points in ps to a standard reference size
-    private List<Point> scale(List<Point> ps) {
+    // Scale the points in ps to fit the specified dimensions.
+    // Result is in Cartesian coordinates and bounded by the specified
+    // width and height, i.e. the x-range is (-(w/2), (w/2)).
+    private List<Point> scaleToFit(List<Point> ps, int w, int h) {
         List<Point> scaled = new ArrayList<>();
-
         if (ps.size() <= 0) {
             return scaled;
         }
@@ -139,8 +159,8 @@ public class PointSet implements Serializable {
         }
 
         // Compute the amount by which to scale each point
-        float factorX = (maxX != 0) ? (standardScaleFactor / maxX) : 1;
-        float factorY = (maxY != 0) ? (standardScaleFactor / maxY) : 1;
+        float factorX = maxX != 0 ? ((float)w / maxX) : 1;
+        float factorY = maxY != 0 ? ((float)h / maxY) : 1;
 
         // Scale the points
         for (Point p : ps) {
@@ -151,6 +171,11 @@ public class PointSet implements Serializable {
         }
 
         return scaled;
+    }
+
+    // Scale the points in ps to a standard reference size
+    private List<Point> scale(List<Point> ps) {
+        return scaleToFit(ps, standardScaleFactor, standardScaleFactor);
     }
 
     // Shift the points in ps so that the origin is at the (approximate)
@@ -210,5 +235,5 @@ public class PointSet implements Serializable {
         return min;
     }
 
-    private static final float standardScaleFactor = 1000;
+    private static final int standardScaleFactor = 1000;
 }
