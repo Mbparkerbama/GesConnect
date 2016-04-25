@@ -63,7 +63,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="SettingsActivity" />
         </activity>
-        <activity android:name=".EditCustomGestureActivity"></activity>
+        <activity
+            android:name=".EditCustomGestureActivity"
+            android:label="@string/title_activity_edit_custom_gesture"
+            android:parentActivityName=".ManageGestureActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ManageGestureActivity" />
+            ></activity>
     </application>
 
 </manifest>
