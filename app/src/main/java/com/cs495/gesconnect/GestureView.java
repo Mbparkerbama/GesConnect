@@ -17,6 +17,10 @@ import android.widget.ImageView;
 public class GestureView extends View {
     private PointSet points = new PointSet();
 
+    public PointSet getPoints() {
+        return points;
+    }
+
     public void setPoints(PointSet points) {
         this.points = points;
     }

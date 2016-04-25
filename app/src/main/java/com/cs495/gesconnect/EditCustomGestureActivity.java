@@ -31,6 +31,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
     private Gesture gesture;
     private ArrayList<CandidateContact> candidateContacts
             = new ArrayList<CandidateContact>();
+    private GestureView gestureView;
 
     private static final String TAG = "EditCustomGesture";
 
@@ -96,7 +97,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         // The gesture is displayed when the screen first appears; once the
         // user starts drawing, the points are cleared from the GestureView
         // to make room for the MyScript widget's ink.
-        GestureView gestureView = (GestureView) findViewById(R.id.gestureView);
+        gestureView = (GestureView) findViewById(R.id.gestureView);
         gestureView.setPoints(gesture.getPoints());
 
         /**
@@ -177,6 +178,12 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
     @Override
     public void onPenMove(SingleLineWidgetApi singleLineWidgetApi, CaptureInfo captureInfo) {
         gesture = null;
+
+        // Ensure the initial gesture is no longer displayed
+        if (gestureView.getPoints().getPoints().size() > 0) {
+            gestureView.setPoints(new PointSet());
+            gestureView.invalidate();
+        }
 
         Point p = new Point();
         p.setX(captureInfo.getX());
