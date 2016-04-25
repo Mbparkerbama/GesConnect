@@ -65,7 +65,9 @@ public class ManageGestureActivity extends AppCompatActivity {
 
                 for (Map.Entry<ContactTarget, String> i : contacts.entrySet()) {
                     if (i.getValue().equals(contactName)) {
-                        intent.putExtra("ContactTarget", i.getKey());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("ContactTarget", i.getKey());
+                        intent.putExtras(bundle);
                         break;
                     }
                 }

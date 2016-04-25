@@ -61,16 +61,16 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         widget.configure("en_US", "cur_text");
 
         //retrieves the selected gesture and contact information
-        String savedGesture;
+        ContactTarget savedGesture;
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras == null){
                 savedGesture = null;
             }else{
-                savedGesture = extras.getString(""); //subject to change
+                savedGesture = (ContactTarget) extras.getSerializable("ContactTarget"); //subject to change
             }
         }else{
-            savedGesture = (String) savedInstanceState.getSerializable(""); //subject to change
+            savedGesture = (ContactTarget) savedInstanceState.getSerializable("ContactTarget"); //subject to change
         }
 
         /**
