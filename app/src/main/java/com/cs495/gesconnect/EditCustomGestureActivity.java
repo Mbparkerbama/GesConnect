@@ -92,6 +92,13 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         gesture = Settings.getGestureList().getGestures().get(contactTarget);
         Log.d(TAG, "Gesture: " + gesture.toString());
 
+        // Send the points to the GestureView.
+        // The gesture is displayed when the screen first appears; once the
+        // user starts drawing, the points are cleared from the GestureView
+        // to make room for the MyScript widget's ink.
+        GestureView gestureView = (GestureView) findViewById(R.id.gestureView);
+        gestureView.setPoints(gesture.getPoints());
+
         /**
          * Configure Buttons
          */
