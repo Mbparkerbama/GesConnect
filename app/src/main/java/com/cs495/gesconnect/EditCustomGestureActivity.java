@@ -19,6 +19,8 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
 
     private SingleLineWidgetApi widget;
     private PointSet pointSet = new PointSet();
+    private ContactTarget contactTarget;
+    private Gesture gesture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,17 +63,18 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
         widget.configure("en_US", "cur_text");
 
         //retrieves the selected gesture and contact information
-        ContactTarget savedGesture;
         if (savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras == null){
-                savedGesture = null;
+                contactTarget = null;
             }else{
-                savedGesture = (ContactTarget) extras.getSerializable("ContactTarget"); //subject to change
+                contactTarget = (ContactTarget) extras.getSerializable("ContactTarget"); //subject to change
             }
         }else{
-            savedGesture = (ContactTarget) savedInstanceState.getSerializable("ContactTarget"); //subject to change
+            contactTarget = (ContactTarget) savedInstanceState.getSerializable("ContactTarget"); //subject to change
         }
+
+        gesture = Settings.getGestureList().getGestures().get(contactTarget);
 
         /**
          * Configure Buttons
