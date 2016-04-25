@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class PointSet implements Serializable {
     public static final String TAG = "PointSet";
-    public static final float MATCH_VAL = 125.0f;
+    public static final float MATCH_VAL = 100.0f;
 
     private List<Point> points;
 
