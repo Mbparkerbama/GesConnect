@@ -69,6 +69,23 @@ public class ContactTarget implements Serializable {
         }
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (!(o instanceof ContactTarget)) return false;
+
+        ContactTarget other = (ContactTarget) o;
+        return other.getLookupKey().equals(lookupKey) &&
+                other.phoneType == phoneType;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        String string = lookupKey + Integer.toString(phoneType);
+        return string.hashCode();
+    }
+
     private String lookupKey;
     private int phoneType;
 

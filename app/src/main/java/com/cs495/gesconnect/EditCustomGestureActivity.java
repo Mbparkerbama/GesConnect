@@ -4,13 +4,21 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.myscript.atk.core.CaptureInfo;
 import com.myscript.atk.sltw.SingleLineWidget;
 import com.myscript.atk.sltw.SingleLineWidgetApi;
 import com.myscript.certificate.MyCertificate;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EditCustomGestureActivity extends AppCompatActivity implements
         SingleLineWidgetApi.OnConfiguredListener,
@@ -21,6 +29,10 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
     private PointSet pointSet = new PointSet();
     private ContactTarget contactTarget;
     private Gesture gesture;
+    private ArrayList<CandidateContact> candidateContacts
+            = new ArrayList<CandidateContact>();
+
+    private static final String TAG = "EditCustomGesture";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +81,15 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
                 contactTarget = null;
             }else{
                 contactTarget = (ContactTarget) extras.getSerializable("ContactTarget"); //subject to change
+                Log.d(TAG, "Getting contact from bundle");
+                Log.d(TAG, "Contact Target: " + contactTarget.toString());
             }
         }else{
             contactTarget = (ContactTarget) savedInstanceState.getSerializable("ContactTarget"); //subject to change
         }
 
         gesture = Settings.getGestureList().getGestures().get(contactTarget);
+        Log.d(TAG, "Gesture: " + gesture.toString());
 
         /**
          * Configure Buttons
@@ -104,6 +119,33 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
 
         final Button submitButton = (Button) findViewById(R.id.drawing_button_middle);
         submitButton.setText("Submit");
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onSubmitButtonClickListener(v);
+                if (gesture != null || !pointSet.getPoints().isEmpty()) {
+                    ContactsManager contactsManager
+                            = new ContactsManager(getApplicationContext());
+
+                    candidateContacts = contactsManager.findCandidateContacts();
+                    PopupMenu popupMenu = new PopupMenu(getApplicationContext(),
+                            v);
+
+                    // Add candidates to the list
+                    for (int i = 0; i < candidateContacts.size(); i++) {
+                        popupMenu.getMenu().add(Menu.NONE,
+                                i,
+                                Menu.NONE,
+                                candidateContacts.get(i).getDisplayString());
+                    }
+
+                    popupMenu.setOnMenuItemClickListener(popupHandler);
+                    popupMenu.show();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -121,17 +163,53 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
 
     @Override
     public void onTextChanged(SingleLineWidgetApi singleLineWidgetApi, String s, boolean b) {
-        //
+        widget.setText("");
     }
 
     @Override
     public void onPenMove(SingleLineWidgetApi singleLineWidgetApi, CaptureInfo captureInfo) {
+        gesture = null;
+
         Point p = new Point();
         p.setX(captureInfo.getX());
         p.setY(captureInfo.getY());
 
         pointSet.appendPoint(p);
     }
+
+    PopupMenu.OnMenuItemClickListener popupHandler
+            = new PopupMenu.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            int index = item.getItemId();
+            GestureList gestureList = Settings.getGestureList();
+
+            gestureList.getGestures().remove(contactTarget);
+
+            HashMap<ContactTarget, Gesture> gestures
+                    = gestureList.getGestures();
+
+            // Add a new entry to the gesture list for this contact
+            if (gesture == null) {
+                gesture = new Gesture(pointSet);
+            }
+
+            gestures.put(new ContactTarget(candidateContacts.get(index).getLookupKey(),
+                            candidateContacts.get(index).getPhoneType()),
+                    gesture);
+
+
+            // Write the updated gesture list to permanent storage
+
+            Settings.saveGestureList(getApplicationContext());
+            Toast.makeText(getApplicationContext(), "Added a custom gesture to: " + candidateContacts.get(index).getDisplayString(), Toast.LENGTH_LONG).show();
+//            widget.clear();
+//            pointSet.clear();
+
+            return true;
+        }
+
+    };
 
 
 
