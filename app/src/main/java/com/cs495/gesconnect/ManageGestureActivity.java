@@ -73,6 +73,7 @@ public class ManageGestureActivity extends AppCompatActivity {
                 }
 
                 startActivity(intent);
+                finish();
             }
         });
 
