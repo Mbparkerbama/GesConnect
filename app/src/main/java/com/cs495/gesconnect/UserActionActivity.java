@@ -62,6 +62,7 @@ public class UserActionActivity extends AppCompatActivity implements
         widget.setOnTextChangedListener(this);
         widget.setAutoScrollEnabled(false);
         widget.setOnPenMoveListener(this);
+        widget.setAutoTypesetEnabled(false);
 
         // references assets directly from the APK to avoid extraction in application
         // file system
