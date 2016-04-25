@@ -172,7 +172,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
 
     @Override
     public void onTextChanged(SingleLineWidgetApi singleLineWidgetApi, String s, boolean b) {
-        widget.setText("");
+//        widget.setText("");
     }
 
     @Override

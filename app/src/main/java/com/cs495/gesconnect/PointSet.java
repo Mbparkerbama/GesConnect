@@ -87,28 +87,56 @@ public class PointSet implements Serializable {
      * @param canvas Canvas to draw on.
      */
     public void drawScaled(Canvas canvas) {
-        int w = canvas.getWidth();
-        int h = canvas.getHeight();
+        // Scale the coordinates to an area 3/4ths the size of the actual
+        // Canvas (otherwise, the gesture may overlap the UI)
+        int w = (int)((float)(canvas.getWidth()) * canvasScaleFactor);
+        int h = (int)((float)(canvas.getHeight()) * canvasScaleFactor);
 
         List<Point> scaledPoints
                 = scaleToFit(points, w, h);
+        // Center the points around the "margins" created
+        // by the previous step
+        int offsetX = (canvas.getWidth() - w) / 2;
+        int offsetY = (canvas.getHeight() - h) / 2;
 
-        // Draw points, offsetting to account for Cartesian vs. drawing coordinates
+        // Draw points
         Paint paint = new Paint();
-        paint.setARGB(255, 0, 0, 0);
-        int offsetX = w / 2;
-        int offsetY = h / 2;
+        paint.setARGB(0xFF, 0, 0x88, 0xFF);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float)8.0);
         for (int i = 0; i < scaledPoints.size() - 1; i++) {
+//            Log.d(TAG, "point: " + Float.toString(
+//                    scaledPoints.get(i).getX())
+//                    + ", "
+//                    + Float.toString(
+//                            scaledPoints.get(i).getY()));
             Point point1 = scaledPoints.get(i);
             Point point2 = scaledPoints.get(i + 1);
 
+            float startX = ((point1.getX())) + offsetX;
+            float startY = ((point1.getY())) + offsetY;
+            float endX = ((point2.getX())) + offsetX;
+            float endY = ((point2.getY())) + offsetY;
+//            Log.d(TAG, "start: " + Float.toString(
+//                    startX)
+//                    + ", "
+//                    + Float.toString(
+//                            startY));
+//            Log.d(TAG, "end: " + Float.toString(
+//                    endX)
+//                    + ", "
+//                    + Float.toString(
+//                    endY));
+
             canvas.drawLine(
-                    (float)((point1.getX())) + offsetX,
-                    (float)(-(point1.getY())) + offsetY,
-                    (float)((point2.getX())) + offsetX,
-                    (float)(-(point2.getY())) + offsetY,
+                    startX,
+                    startY,
+                    endX,
+                    endY,
                     paint);
         }
+//        Log.d(TAG, "w: " + Integer.toString(w));
+//        Log.d(TAG, "h: " + Integer.toString(h));
     }
 
     private float min(List<Float> dists) {
@@ -236,4 +264,7 @@ public class PointSet implements Serializable {
     }
 
     private static final int standardScaleFactor = 1000;
+
+    private static final float canvasScaleFactor
+            = 3.0f / 4.0f;
 }
