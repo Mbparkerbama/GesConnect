@@ -134,7 +134,27 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 //onSubmitButtonClickListener(v);
                 if (gesture != null || !pointSet.getPoints().isEmpty()) {
-                    ContactsManager contactsManager
+                    GestureList gestureList = Settings.getGestureList();
+
+                    HashMap<ContactTarget, Gesture> gestures
+                            = gestureList.getGestures();
+
+                    gestures.remove(contactTarget);
+
+                    // Add a new entry to the gesture list for this contact
+                    if (gesture == null) {
+                        gesture = new Gesture(pointSet);
+                    }
+
+                    gestures.put(contactTarget,
+                            gesture);
+                    // Write the updated gesture list to permanent storage
+
+                    Settings.saveGestureList(getApplicationContext());
+                    Toast.makeText(getApplicationContext(),
+                            "Gesture updated!",
+                            Toast.LENGTH_LONG).show();
+/*                    ContactsManager contactsManager
                             = new ContactsManager(getApplicationContext());
 
                     candidateContacts = contactsManager.findCandidateContacts();
@@ -150,7 +170,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
                     }
 
                     popupMenu.setOnMenuItemClickListener(popupHandler);
-                    popupMenu.show();
+                    popupMenu.show(); */
                 }
 
             }
