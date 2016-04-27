@@ -252,9 +252,8 @@ public class UserActionActivity extends AppCompatActivity implements
             long[] pattern = {0, 300};
             vibrate(pattern, -1);
 
-//            startActivity(intent);
+            startActivity(intent);
             Log.d(TAG, "Calling: " + phone);
-            Toast.makeText(getApplicationContext(),"Calling " + phone, Toast.LENGTH_SHORT).show();
 
         }catch(SecurityException e){
             Toast.makeText(getApplicationContext(),"Invalid permission",Toast.LENGTH_SHORT).show();
