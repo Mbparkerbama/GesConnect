@@ -154,6 +154,7 @@ public class EditCustomGestureActivity extends AppCompatActivity implements
                     Toast.makeText(getApplicationContext(),
                             "Gesture updated!",
                             Toast.LENGTH_LONG).show();
+                    finish();
 /*                    ContactsManager contactsManager
                             = new ContactsManager(getApplicationContext());
 
